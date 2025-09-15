@@ -1,2 +1,28 @@
+# OS-specific junk
+.DS_Store
+Thumbs.db
+
+# Node.js dependencies (if you use npm for tooling)
 node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
 *.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# VS Code settings
+.vscode/
+
+# Environment files (if you ever add secrets)
+.env
+.env.local
+.env.*
+
+# Cache
+.cache/
