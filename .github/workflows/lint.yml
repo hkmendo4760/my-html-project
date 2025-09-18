@@ -7,7 +7,7 @@ on:
     branches: [main, develop]
 
 permissions:
-  contents: read
+  contents: write
   checks: write
   pull-requests: write  # Needed for reviewdog
 
@@ -29,20 +29,20 @@ jobs:
         run: npm ci
 
       - name: Run Prettier
-        run: npx prettier --check "docs/**/*.{html,css,js}"
+        run: npx prettier --check "docs/*.{html,css,js}"
 
       - name: Run HTMLHint
-        run: npx htmlhint "docs/**/*.html"
+        run: npx htmlhint "docs/*.html"
 
       - name: Run Stylelint with Reviewdog
         uses: reviewdog/action-stylelint@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          stylelint_input: "docs/**/*.css"
+          stylelint_input: "docs/*.css"
           reporter: github-pr-review
           fail_on_error: true
-      - name: Run Sytlelint CLI
-        run: npx sytlelint "docs/*.css"
+      - name: Run Stylelint CLI
+        run: npx stylelint "docs/*.css"
   autofix:
     name: Auto-Fix Formatting
     runs-on: ubuntu-latest
