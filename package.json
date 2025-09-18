@@ -32,8 +32,7 @@
     "stylelint-config-standard": "^39.0.0"
   },
   "lint-staged": {
-     "docs/**/*.html": "[\"prettier --write\"]",
-     "docs/**/*.css": "[\"prettier --write\"]"
+     "docs/*.html": ["prettier --write"],
+     "docs/*.css": ["prettier --write", "stylelint --fix"]
     }
-  }
 }
