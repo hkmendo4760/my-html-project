@@ -41,3 +41,5 @@ jobs:
           stylelint_input: "docs/**/*.css"
           reporter: github-pr-review
           fail_on_error: true
+      - name: Run Sytlelint CLI
+        run: npx sytlelint "docs/*.css"      
