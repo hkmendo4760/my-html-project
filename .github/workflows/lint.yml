@@ -15,7 +15,7 @@ jobs:
   lint:
     name: Run Linters
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -42,4 +42,31 @@ jobs:
           reporter: github-pr-review
           fail_on_error: true
       - name: Run Sytlelint CLI
-        run: npx sytlelint "docs/*.css"      
+        run: npx sytlelint "docs/*.css"
+  autofix:
+    name: Auto-Fix Formatting
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Prettier with --write
+        run: npx prettier --write "docs/**/*.{html,css,js}"
+      - name: Run Stylelint with --fix
+        run: npx stylelint "docs/**/*.css" --fix
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "chore: auto-format via CI"
+          git push
