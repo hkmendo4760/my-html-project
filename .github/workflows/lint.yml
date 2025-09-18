@@ -46,7 +46,7 @@ jobs:
   autofix:
     name: Auto-Fix Formatting
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
     
     steps:
       - name: Checkout code
