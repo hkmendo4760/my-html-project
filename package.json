@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,15 @@
     "@eslint/js": "^9.35.0",
     "eslint": "^9.35.0",
     "htmlhint": "^1.7.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
     "prettier": "^3.6.2",
     "stylelint": "^16.24.0",
     "stylelint-config-standard": "^39.0.0"
+  },
+  "lint-staged": {
+     "docs/**/*.html": "[\"prettier --write\"]",
+     "docs/**/*.css": "[\"prettier --write\"]"
+    }
   }
 }
