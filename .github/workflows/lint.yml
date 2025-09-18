@@ -1,4 +1,4 @@
-name: Lint Static Site
+name: Lint CSS with Stylelint and Reviewdog
 
 on:
   push:
@@ -9,11 +9,13 @@ on:
 permissions:
   contents: read
   checks: write
+  pull-requests: write  # Needed for reviewdog
 
 jobs:
   lint:
     name: Run Linters
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,10 +28,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Lint Action
-        uses: wearerequired/lint-action@v2
+      - name: Run ESLint
+        run: npx eslint "docs/**/*.js" --format stylish
+
+      - name: Run Prettier
+        run: npx prettier --check "docs/**/*.{html,css,js}"
+
+      - name: Run HTMLHint
+        run: npx htmlhint "docs/**/*.html"
+
+      - name: Run Stylelint with Reviewdog
+        uses: reviewdog/action-stylelint@v1
         with:
-          htmlhint: true
-          stylelint: true
-          eslint: true
-          prettier: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          stylelint_input: "docs/**/*.css"
+          reporter: github-pr-review
+          fail_on_error: true
