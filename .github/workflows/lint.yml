@@ -60,9 +60,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Prettier with --write
-        run: npx prettier --write "docs/**/*.{html,css,js}"
+        run: npx prettier --write "docs/*.{html,css,js}"
       - name: Run Stylelint with --fix
-        run: npx stylelint "docs/**/*.css" --fix
+        run: npx stylelint "docs/*.css" --fix
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions"
